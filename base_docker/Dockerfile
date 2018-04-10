@@ -13,6 +13,8 @@ ENV NODE_ENV production
 
 # Change the workdir to the app's directory
 WORKDIR ${APP_DIR}
+RUN apk add --no-cache ca-certificates \
+     &&   update-ca-certificates
 
 # Add application
 ADD . ${APP_DIR}
