@@ -29,3 +29,4 @@ Build:
   script:
     - apk add --no-cache git
     - ./build.sh
+    - ./deploy/run_trigger.sh
