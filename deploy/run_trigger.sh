@@ -7,5 +7,5 @@ wd=`dirname $0`
 version=`getVersionString`
 
 if [ ! -z "$DEPLOY_TRIGGER_URL" ]; then
-  curl $DEPLOY_TRIGGER_URL&variables[CORE_IMAGE]=$IMAGE:$version
+  curl -g -X POST -F ref=master -F token=$DEPLOY_TRIGGER_TOKEN -F variables[CORE_IMAGE]=$IMAGE:$version ${DEPLOY_TRIGGER_URL}
 fi
