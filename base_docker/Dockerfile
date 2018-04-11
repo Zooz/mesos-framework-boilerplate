@@ -14,13 +14,19 @@ ENV NODE_ENV production
 # Change the workdir to the app's directory
 WORKDIR ${APP_DIR}
 RUN apk add --no-cache ca-certificates \
-     &&   update-ca-certificates
+    openssl \
+    wget \
+    git \
+    && update-ca-certificates
 
 # Add application
 ADD . ${APP_DIR}
 
 ARG NPM_SET
 RUN $NPM_SET || true;npm install
+
+RUN npm install bower -g && \
+    bower install --allow-root
 
 CMD ["node", "index.js"]
 
