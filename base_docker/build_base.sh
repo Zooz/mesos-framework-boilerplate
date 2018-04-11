@@ -34,7 +34,22 @@ if [ "$rc" -eq "0" ]; then
   diff deps/package.orig deps/package.current
   rc=$?
 fi
-
+if [ "$rc" -eq "0" ]; then
+  jq .dependencies ../bower.json | sort | sed 's/,$//' > deps/bower.orig
+  rc=$?
+fi
+if [ "$rc" -eq "0" ]; then
+  jq .dependencies ./bower.json | sort | sed 's/,$//' > deps/bower.current
+  rc=$?
+fi
+if [ "$rc" -eq "0" ]; then
+  diff deps/bower.orig deps/bower.current
+  rc=$?
+fi
+if [ "$rc" -eq "0" ]; then
+  diff .bowerrc ../.bowerrc
+  rc=$?
+fi
 if [ "$rc" -ne "0" ]; then
   if [ "$BUILD" -eq "0" ]; then
     echo "Base image out of date, asked not to build"
